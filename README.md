@@ -70,4 +70,7 @@ Also, the tag string should be ASCII only and its length should be 128 character
 
 Validates a single address using Mailgun's address validation service.
 
+**$WireMailMailgun->setDeliveryTime(*string* $time)**
+Schedules the dispatching of the email to some point in the future. The string must be a valid PHP date string.
+
 For more information on what this method returns, see [Mailgun's documentation](https://documentation.mailgun.com/api-email-validation.html#email-validation).

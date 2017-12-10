@@ -73,6 +73,11 @@ class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 		// Email Click tracking
 		$postFields['o:tracking-opens'] = ($this->openTracking() === true) ? 'yes' : 'no';
 
+		// Email delivery time
+		if($this->deliveryTime) {
+			$postFields['o:deliverytime'] = $this->deliveryTime;
+		}
+
 		// Attachments
 		if ($this->getAttachments() !== false) {
 			$attachmentIndex = 0;
@@ -178,7 +183,7 @@ class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 	 * of calling wireMail() directly
 	 */
 	public function send()
-	{
+	{	
 		return $this->___send();
 	}
 
@@ -549,6 +554,20 @@ class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 	private function openTracking()
 	{
 		return ($this->trackOpens == 'trackOpens') ? true : false;
+	}
+
+	/**
+	 * sets the delivery time
+	 * as RFC 2822 formatted date string at GMT time
+	 *
+	 * @param string $time
+	 */
+	public function setDeliveryTime($time)
+	{
+		$date = new DateTime($time, new DateTimeZone($this->config->timezone));
+		$date->setTimezone(new DateTimeZone('GMT'));
+		$gmtDate = $date->format('D, d M Y H:i:s e');
+		$this->deliveryTime = $gmtDate;
 	}
 
 	/**
