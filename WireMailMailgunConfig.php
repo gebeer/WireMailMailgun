@@ -24,6 +24,16 @@ class WireMailMailgunConfig extends ModuleConfig
 				'columnWidth' => 50
 			),
 			array(
+				'name' => 'region',
+				'label' => __('Region'),
+				'description' => __('The region for this API key.'),
+				'required' => true,
+				'type' => 'Radios',
+				'columnWidth' => 100,
+				'optionColumns' => 1,
+				'options' => ["us" => 'US', "eu" => 'EU']
+			),
+			array(
 				'name' => 'fromEmail',
 				'label' => __('Default Sender Email Address'),
 				'description' => __('The "from" email address. When left empty, defaults to *processwire@[domainName]*.'),

@@ -6,11 +6,12 @@
  * @property string apiKey The API key set in config
  * @property string publicApiKey The public API key set in config
  * @property string domain The domain for the API key
+ * @property string region The region for the API key set in config
  * @property bool batchMode True by default. See setBatchMode() method of this class for more info.
  */
 class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 {
-	private $apiUrl = 'https://api.mailgun.net/v3/';
+	private $apiUrl;
 	private $batchMode = true;
 	private $tags = [];
 	private $recipientsVariables = [];
@@ -26,6 +27,11 @@ class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 			'singular' => false,
 			'autoload' => false
 		);
+	}
+
+	public function init() 
+	{
+		$this->setApiUrl($this->region);
 	}
 
 	/**
@@ -195,6 +201,15 @@ class WireMailMailgun extends WireMail implements Module, ConfigurableModule
 	public function setApiKey($apiKey)
 	{
 		$this->apiKey = $apiKey;
+	}
+	/**
+	 * Overrides the Mailgun region setting in config
+	 *
+	 * @param string $region ('us' or 'eu');
+	 */
+	public function setApiUrl($region)
+	{
+		$this->apiUrl = ($region != 'us') ? "https://api.{$region}.mailgun.net/v3/" : 'https://api.mailgun.net/v3/';
 	}
 
 	/**
